@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIN Validation</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PIN Validation</h2>
+        <form id="pinForm">
+            <label for="pin1">Digit 1:</label>
+            <input type="text" id="pin1" maxlength="1" required>
+            
+            <label for="pin2">Digit 2:</label>
+            <input type="text" id="pin2" maxlength="1" required>
+            
+            <label for="pin3">Digit 3:</label>
+            <input type="text" id="pin3" maxlength="1" required>
+            
+            <label for="pin4">Digit 4:</label>
+            <input type="text" id="pin4" maxlength="1" required>
+
+            <button type="button" onclick="validatePin()">Submit</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function validatePin() {
+            var pin1 = document.getElementById('pin1').value;
+            var pin2 = document.getElementById('pin2').value;
+            var pin3 = document.getElementById('pin3').value;
+            var pin4 = document.getElementById('pin4').value;
+
+            var count = 3;
+            var flag = true;
+
+            while (flag && (!pin1 || !pin1.match(/^\d$/) || !pin2.match(/^\d$/) || !pin3.match(/^\d$/) || !pin4.match(/^\d$/) || parseInt(pin1) < 0 || parseInt(pin2) < 0 || parseInt(pin3) < 0 || parseInt(pin4) < 0)) {
+                alert('Invalid PIN. Please enter a valid 4-digit PIN.');
+                count--;
+
+                if (count === 0) {
+                    alert('You have exceeded the limit.');
+                    flag = false;
+                    break;
+                }
+
+                pin1 = document.getElementById('pin1').value;
+                pin2 = document.getElementById('pin2').value;
+                pin3 = document.getElementById('pin3').value;
+                pin4 = document.getElementById('pin4').value;
+                
+                if (pin1.match(/^\d$/) && pin2.match(/^\d$/) && pin3.match(/^\d$/) && pin4.match(/^\d$/) && parseInt(pin1) >= 0 && parseInt(pin2) >= 0 && parseInt(pin3) >= 0 && parseInt(pin4) >= 0) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+            }
+
+            if (flag) {
+                document.getElementById('result').innerText = 'Correct PIN';
+            } else {
+                document.getElementById('result').innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>
